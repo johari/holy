@@ -17,6 +17,10 @@ class RubyTransformer(ast.NodeTransformer):
   def visit_Index(self, node):
     return "%s" % self.visit(node.value)
 
+  def visit_Import(self, node):
+    names = [x.name for x in node.names]
+    return "# CAREFUL HERE:\nimport %s\n# END CAREFUL" % ",".join(names)
+
   def visit_Slice(self, node):
     dots = "..."
     if node.lower != None:

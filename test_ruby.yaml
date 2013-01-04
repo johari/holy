@@ -6,6 +6,13 @@ def:
     def foo(bar, baz)
       ;
     end
+import:
+  py: |-
+    import sys
+  rb: |-
+    # CAREFUL HERE:
+    import sys
+    # END CAREFUL
 print:
   py: |-
     print "Hello World!"

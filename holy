@@ -1,0 +1,25 @@
+#!/usr/bin/python
+"""
+Holy is a Python to Ruby AST transformer
+
+Usage:
+  holy <file>
+  holy -h|--help
+
+Options:
+  -h --help   Displays this very holy message
+
+Examples:
+  holy /path/to/spam.py
+
+"""
+
+from docopt import docopt
+
+if __name__ == '__main__':
+  from holy import Holy
+
+  args = docopt(__doc__)
+
+  h = Holy(open(args["<file>"]).read())
+  print h.toRuby()

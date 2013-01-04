@@ -1,0 +1,153 @@
+def:
+  py: |-
+    def foo(bar, baz):
+      pass
+  rb: |-
+    def foo(bar, baz)
+      ;
+    end
+print:
+  py: |-
+    print "Hello World!"
+  rb: |-
+    puts "Hello World!"
+for_range:
+  py: |-
+    for i in range(1, 10):
+      print i
+  rb: |-
+    1.upto(10) do |i|
+      puts i
+    end
+boolean_reserved:
+  py: |-
+    [True, False, None, Foo]
+  rb: |-
+    [true, false, nil, Foo]
+if_without_else:
+  py: |-
+    if True and False:
+      print "hi"
+  rb: |-
+    if true && false then
+      puts "hi"
+    end
+attribute:
+  py: |-
+    result.call(foo).bar.baz
+  rb: |-
+    result.call(foo).bar.baz
+slice_index:
+  py: |-
+    a[0]
+    a[3:5]
+    a[:5]
+    a[5:]
+  rb: |-
+    a[0]
+    a[3...5]
+    a[0...5]
+    a[5..-1]
+compare:
+  py: |-
+    if 1 < 2:
+      print "qux"
+    elif 1:
+      print "quux"
+    elif 1 < 2 < 3:
+      print "foo"
+    elif 1 < 2 and 2 < 3:
+      print "bar"
+  rb: |-
+    if 1 < 2 then
+      puts "qux"
+    elsif 1 then
+      puts "quux"
+    elsif 1 < 2 && 2 < 3 then
+      puts "foo"
+    elsif 1 < 2 && 2 < 3 then
+      puts "bar"
+    end
+if_compare:
+  py: |-
+    if 1 < 2 < 3 and a == "a":
+      print "if"
+    elif a == b and not b == 10:
+      if 3 < 4:
+        print "elif 1"
+      else:
+        print "else elif"
+    else:
+      print "final else"
+  rb: |-
+    if 1 < 2 && 2 < 3 && a == "a" then
+      puts "if"
+    elsif a == b && (!(b==10)) then
+      if 3 < 4 then
+        puts "elif 1"
+      else
+        print "else elif"
+      end
+    else
+      print "final else"
+    end
+list:
+  py: |-
+    [1, 2, "foo"]
+  rb: |-
+    [1, 2, "foo"]
+merge_sort:
+  py: |-
+    def mergesort(arr):
+        if len(arr) == 1:
+            return arr
+
+        m = len(arr) / 2
+        l = mergesort(arr[:m])
+        r = mergesort(arr[m:])
+
+        if not len(l) or not len(r):
+            return l or r
+
+        result = []
+        i = j = 0
+        while (len(result) < len(r)+len(l)):
+            if l[i] < r[j]:
+                result.append(l[i])
+                i += 1
+            else:
+                result.append(r[j])
+                j += 1
+            if i == len(l) or j == len(r):
+                result.extend(l[i:] or r[j:])
+                break
+
+        return result
+  rb: |-
+    def mergesort(arr)
+      if arr.length == 1 then
+        return arr
+      end
+      m = (arr.length / 2)
+      l = mergesort(arr[0...m])
+      r = mergesort(arr[m..-1])
+      if not l.length or r.length then
+        return l || r
+      end
+      result = []
+      i = j = 0
+      while result.length < r.length+l.lengthh=l do
+        if l[i] < r[i] then
+          result.push(l[i])
+          i += 1
+        else
+          result.push(r[j])
+          j+= 1
+        end
+        if i == l.length or j == r.length:
+          result.extend(l[i..-1] || r[j..-1])
+          break
+        end
+        return result
+      end
+    end

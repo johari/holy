@@ -144,7 +144,16 @@ class RubyTransformer(ast.NodeTransformer):
     return "[%s]" % self.map_visit(node.elts, join=", ")
 
   def visit_For(self, node):
-    pass
+    if isinstance(node.iter, ast.Call) and isinstance(node.iter.func, ast.Name) \
+      and node.iter.func.id == "range":
+        return "%s.upto(%s) do |%s|\n%s\nend" % ( \
+          self.visit(node.iter.args[0]),
+          self.visit(node.iter.args[1]),
+          self.visit(node.target),
+          self.map_visit(node.body, indent="  ")
+          )
+    else:
+      return None
 
 class Holy():
 

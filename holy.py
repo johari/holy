@@ -164,8 +164,11 @@ class Holy():
   def __init__(self, py):
     self.py = py
     self.node = ast.parse(self.py)
-    if os.environ["debug"]:
-      open("tmp/foo_%s_dump" % os.environ["HACK"], "w").write(ast.dump(self.node))
+    try:
+      if os.environ["debug"]:
+        open("tmp/foo_%s_dump" % os.environ["HACK"], "w").write(ast.dump(self.node))
+    except KeyError:
+      pass
 
   def toRuby(self):
     res = RubyTransformer().visit(self.node)

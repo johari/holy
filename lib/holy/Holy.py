@@ -19,7 +19,7 @@ class RubyTransformer(ast.NodeTransformer):
 
   def visit_Import(self, node):
     names = [x.name for x in node.names]
-    return "# CAREFUL HERE:\nimport %s\n# END CAREFUL" % ",".join(names)
+    return "# CAREFUL HERE:\n# import %s\n# END CAREFUL" % ",".join(names)
 
   def visit_Slice(self, node):
     dots = "..."
@@ -43,6 +43,11 @@ class RubyTransformer(ast.NodeTransformer):
   def visit_Add(self, node):
     return "+"
 
+  def visit_Mult(self, node):
+    return "*"
+
+  def visit_Tuple(self, node):
+    return "(%s)" % self.map_visit(node.elts, ", ")
   def visit_Call(self, node):
     func = self.visit(node.func)
     args = self.map_visit(node.args)
@@ -101,22 +106,23 @@ class RubyTransformer(ast.NodeTransformer):
     return "=="
 
   def visit_Not(self, node):
-    return "!"
+    return "not"
 
   def visit_BinOp(self, node):
-    return "%s %s %s" % (self.visit(node.left), self.visit(node.op), self.visit(node.right))
+    return "(%s %s %s)" % (self.visit(node.left), self.visit(node.op), self.visit(node.right))
 
   def visit_Div(self, node):
     return "/"
 
   def visit_Or(self, node):
-    return "or"
+    return "||"
 
   def visit_Break(self, node):
     return "break"
 
   def visit_Assign(self, node):
-    return "%s = %s" % (self.map_visit(node.targets, ", "), self.visit(node.value))
+    print node.value
+    return "%s = %s" % (self.map_visit(node.targets, " = "), self.visit(node.value))
 
   def visit_Attribute(self, node):
     return self.map_visit([node.value, node.attr], ".")
@@ -139,7 +145,7 @@ class RubyTransformer(ast.NodeTransformer):
     return self.visit(st)
 
   def visit_UnaryOp(self, node):
-    return "(%s(%s))" % (self.visit(node.op), self.visit(node.operand))
+    return "(%s (%s))" % (self.visit(node.op), self.visit(node.operand))
 
   def visit_BoolOp(self, node):
     return self.map_visit(node.values, join=" "+self.visit(node.op)+" ")
@@ -164,6 +170,7 @@ class Holy():
   def __init__(self, py):
     self.py = py
     self.node = ast.parse(self.py)
+    self.type = {}
     try:
       if os.environ["debug"]:
         open("tmp/foo_%s_dump" % os.environ["HACK"], "w").write(ast.dump(self.node))

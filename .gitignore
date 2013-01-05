@@ -1,2 +1,6 @@
 *.pyc
 tmp/*
+build/*
+*.egg-info/
+*.prefs
+MANIFEST

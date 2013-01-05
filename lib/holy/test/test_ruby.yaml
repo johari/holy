@@ -1,3 +1,28 @@
+list_methods:
+  py : |-
+    l = []
+    l.append(10)
+    f.append(10)
+  rb : |-
+    l = []
+    l.push(10)
+    f.append(10)
+assign:
+  py: |-
+    a = b = c = 5
+    a, b = 2, 3
+    a, b = iterable()
+  rb: |-
+    a = b = c = 5
+    (a, b) = (2, 3)
+    (a, b) = iterable()
+prec:
+  py: |-
+    2+3*5
+    (2+3)*5
+  rb: |-
+    (2 + (3 * 5))
+    ((2 + 3) * 5)
 def:
   py: |-
     def foo(bar, baz):
@@ -11,7 +36,7 @@ import:
     import sys
   rb: |-
     # CAREFUL HERE:
-    import sys
+    # import sys
     # END CAREFUL
 print:
   py: |-
@@ -130,31 +155,34 @@ merge_sort:
                 break
 
         return result
+    mergesort([2,3,1,-4,5])
   rb: |-
     def mergesort(arr)
-      if arr.length == 1 then
+      if (arr.length == 1) then
         return arr
       end
       m = (arr.length / 2)
       l = mergesort(arr[0...m])
       r = mergesort(arr[m..-1])
-      if not l.length or r.length then
+      if (not (l.length)) || (not (r.length)) then
         return l || r
       end
       result = []
       i = j = 0
-      while result.length < r.length+l.lengthh=l do
-        if l[i] < r[i] then
+      while (result.length < (r.length + l.length)) do
+        if (l[i] < r[j]) then
           result.push(l[i])
           i += 1
         else
           result.push(r[j])
-          j+= 1
+          j += 1
         end
-        if i == l.length or j == r.length:
+        if (i == l.length) || (j == r.length) then
           result.extend(l[i..-1] || r[j..-1])
           break
         end
-        return result
       end
+      return result
     end
+    mergesort([2, 3, 1, -4, 5])
+

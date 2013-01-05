@@ -3,10 +3,11 @@
 Holy is a Python to Ruby AST transformer
 
 Usage:
-  holy <file>
+  holy <file> [--debug]
   holy -h|--help
 
 Options:
+  --debug     just ignore this for now..
   -h --help   Displays this very holy message
 
 Examples:
@@ -21,5 +22,9 @@ if __name__ == '__main__':
 
   args = docopt(__doc__)
 
+  import os
+  if args["--debug"]:
+    os.environ["debug"] = "holyout"
+    os.environ["HACK"] = "holyout"
   h = Holy(open(args["<file>"]).read())
   print h.toRuby()
